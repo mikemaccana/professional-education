@@ -12,7 +12,7 @@ This repo has everything you need to plan and teach the course:
 - Working [solutions to each lesson's labs](./labs), following the [Solana Foundation style guide](https://github.com/solana-developers/program-examples/blob/main/CONTRIBUTING.md).
 - The [Agenda](./AGENDA.md) for local and remote training sessions
 
-You can also [contact Mike MacCana](mailto:mike.maccana@solana.org) for help.
+You can also [@solana_devs on X](https://x.com/solana_devs) for help.
 
 > [!NOTE]  
 > If you want to attend a training event and learn Solana (rather than run a training event yourself), follow [@solana_devs on X](https://x.com/solana_devs), and we'll let you know when the next course is running in a city near you or on Zoom!
