@@ -21,9 +21,8 @@ jobs:
       - uses: metadaoproject/setup-anchor@v2.1
         with:
           anchor-version: "latest"
-          # Install Solana CLI (beta, required to fix 'ahash' issue)
-          solana-cli-version: "1.18.16"
-          node-version: "20.12.2"
+          solana-cli-version: "2.0.17"
+          node-version: "22.11.0"
 
       # git will keep outputting:
       #   hint: Using 'master' as the name for the initial branch. This default branch name
@@ -53,24 +52,11 @@ jobs:
         run: |
           solana-keygen new --no-bip39-passphrase
 
-      # Fix:
-      # warning: tool `rust-analyzer` is already installed, remove it from `/home/runner/.cargo/bin`, then run `rustup update` to have rustup manage this tool.
-      # warning: tool `rustfmt` is already installed, remove it from `/home/runner/.cargo/bin`, then run `rustup update` to have rustup manage this tool.
-      # warning: tool `cargo-fmt` is already installed, remove it from `/home/runner/.cargo/bin`, then run `rustup update` to have rustup manage this tool.
-      - name: Fix already installed tools
-        run: |
-          rm /home/runner/.cargo/bin/rust-analyzer /home/runner/.cargo/bin/rustfmt /home/runner/.cargo/bin/cargo-fmt
-          rustup update
-
-      # TODO: remove fix for semver issue once
-      # https://github.com/solana-labs/solana/issues/32503 is resolved
+      # TODO: remove RUSTUP_TOOLCHAIN fix once issue below is resolved
+      # https://stackoverflow.com/questions/79225593/unexpected-cfg-condition-value-solana
       - name: Test the ${{ matrix.project }} project builds and tests pass
         run: |
           cd labs/${{ matrix.project }}
-          echo "----------------------------------------"
-          echo "Fixing solana-program crate not using semver issue..."
-          sed -i 's/ctx/_context/' programs/${{ matrix.project }}/src/lib.rs
-          cargo add solana-program@"=1.18.16"        
           echo "----------------------------------------"
           echo "Creating a keypair..."
           solana-keygen new --no-bip39-passphrase -s -o deleteme.json
@@ -81,7 +67,7 @@ jobs:
           npm i
           echo "----------------------------------------"
           echo "Running 'anchor test'..."
-          anchor test 2>&1 | tee -a build.log
+          RUSTUP_TOOLCHAIN="nightly-2024-11-19" anchor test 2>&1 | tee -a build.log
           echo "----------------------------------------"
           echo "build.log..."
           cat build.log
