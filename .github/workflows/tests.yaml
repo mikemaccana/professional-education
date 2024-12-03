@@ -18,7 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # See https://github.com/metaDAOproject/setup-anchor for docs
-      - uses: metadaoproject/setup-anchor@v2.1
+      # TODO: change to metadaoproject/setup-anchor when https://github.com/metaDAOproject/setup-anchor/issues/9 is resolved
+      - uses: mikemaccana/setup-anchor@v3
         with:
           anchor-version: "latest"
           solana-cli-version: "2.0.17"
