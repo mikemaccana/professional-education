@@ -15,4 +15,5 @@ cluster = "Localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+# TODO remove NODE_NO_WARNINGS=1 once Anchor / ts-mocha etc drops it's deprecated punycode dependency
+test = "NODE_NO_WARNINGS=1 yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
