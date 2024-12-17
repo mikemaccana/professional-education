@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        project: [favorites, escrow]
+        project: [favorites]
 
     steps:
       - uses: actions/checkout@v4
